@@ -29,7 +29,7 @@ export default function Answers({
         }
         return (
           <li key={v4()} className="answer">
-            <button onClick={() => onSelect(answer)} className={cssClass}>
+            <button onClick={() => onSelect(answer)} className={cssClass} disabled={answerState !== ''}>
               {answer}
             </button>
           </li>
