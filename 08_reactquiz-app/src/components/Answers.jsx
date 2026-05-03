@@ -1,0 +1,40 @@
+import { useRef } from "react";
+import { v4 } from "uuid";
+
+export default function Answers({
+  answers,
+  selectedAnswer,
+  answerState,
+  onSelect,
+}) {
+  const shuffledAnswers = useRef();
+  if (!shuffledAnswers.current) {
+    shuffledAnswers.current = [...answers];
+    shuffledAnswers.current.sort(() => Math.random() - 0.5);
+  }
+
+  return (
+    <ul id="answers">
+      {shuffledAnswers.current.map((answer) => {
+        let isSelected = selectedAnswer === answer;
+        let cssClass = "";
+        if (answerState === "answered" && isSelected) {
+          cssClass = "selected";
+        }
+        if (
+          (answerState === "correct" || answerState === "wrong") &&
+          isSelected
+        ) {
+          cssClass = answerState;
+        }
+        return (
+          <li key={v4()} className="answer">
+            <button onClick={() => onSelect(answer)} className={cssClass}>
+              {answer}
+            </button>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
